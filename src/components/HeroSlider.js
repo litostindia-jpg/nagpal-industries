@@ -191,8 +191,8 @@ export default function HeroSlider({ sliderSettings, slides, activeSlideIndex, s
             >
               <source src={sliderSettings.video_path} type="video/mp4" />
             </video>
-            {/* Dark shadow overlay for video */}
-            <div className="absolute inset-0 bg-black/40 backdrop-blur-sm pointer-events-none z-[1]" />
+            {/* Premium gradient overlay to keep text readable on the left and video clear/sharp on the right */}
+            <div className="absolute inset-0 bg-gradient-to-r from-black/75 via-black/45 to-transparent backdrop-blur-[1.5px] pointer-events-none z-[1]" />
           </>
         )}
       </div>
@@ -229,7 +229,7 @@ export default function HeroSlider({ sliderSettings, slides, activeSlideIndex, s
                   exit: { opacity: 0, transition: { duration: 0.2 } }
                 }}
                 className={`text-[40px] md:text-6xl lg:text-[64px] font-black leading-[1.05] tracking-tight uppercase flex flex-wrap drop-shadow-sm ${
-                  sliderSettings.active_type === "video" ? "text-white" : "text-[#1c1917]"
+                  sliderSettings.active_type === "video" ? "text-white drop-shadow-[0_4px_12px_rgba(0,0,0,0.6)]" : "text-[#1c1917]"
                 }`}
               >
                 {(sliderSettings.active_type === "video"
@@ -255,8 +255,8 @@ export default function HeroSlider({ sliderSettings, slides, activeSlideIndex, s
               {/* Dynamic Paragraph with Staggered Word Reveal */}
               <motion.p
                 variants={textItemVariants}
-                className={`text-xs md:text-sm leading-relaxed max-w-lg font-medium flex flex-wrap ${
-                  sliderSettings.active_type === "video" ? "text-gray-200" : "text-[#57534e]"
+                className={`text-xs md:text-sm leading-relaxed max-w-lg flex flex-wrap ${
+                  sliderSettings.active_type === "video" ? "text-white/95 font-semibold drop-shadow-[0_2px_6px_rgba(0,0,0,0.6)]" : "text-[#57534e] font-medium"
                 }`}
               >
                 {(sliderSettings.active_type === "video"

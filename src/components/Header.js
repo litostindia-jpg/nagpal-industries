@@ -10,6 +10,7 @@ export default function Header() {
   const [categories, setCategories] = useState([]);
   const [products, setProducts] = useState([]);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const pathname = usePathname() || "";
 
   useEffect(() => {
@@ -53,6 +54,21 @@ export default function Header() {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
+
+  useEffect(() => {
+    setIsMobileMenuOpen(false);
+  }, [pathname]);
+
+  useEffect(() => {
+    if (isMobileMenuOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [isMobileMenuOpen]);
 
   return (
     <header
@@ -172,6 +188,149 @@ export default function Header() {
                 ? "bg-black text-white hover:bg-stone-900 shadow-md shadow-black/10"
                 : "bg-[#b8965a] hover:bg-[#a08048] text-white shadow-md shadow-[#b8965a]/20 hover:shadow-[#b8965a]/30"
               }`}
+          >
+            Get a Quote
+          </a>
+
+          {/* Mobile Menu Hamburger Button */}
+          <button
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            className={`md:hidden p-2 rounded-xl transition-all focus:outline-none cursor-pointer ${
+              isScrolled
+                ? "text-black hover:bg-stone-100"
+                : "text-stone-800 hover:bg-black/5"
+            }`}
+            aria-label="Toggle Menu"
+          >
+            {isMobileMenuOpen ? (
+              <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            ) : (
+              <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M4 6h16M4 12h16M4 18h16" />
+              </svg>
+            )}
+          </button>
+        </div>
+      </div>
+
+      {/* Mobile Menu Drawer Overlay */}
+      <div
+        className={`fixed inset-0 bg-black/60 backdrop-blur-sm z-40 transition-opacity duration-300 md:hidden ${
+          isMobileMenuOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
+        }`}
+        onClick={() => setIsMobileMenuOpen(false)}
+      />
+
+      {/* Mobile Menu Drawer Content */}
+      <div
+        className={`fixed top-0 right-0 bottom-0 w-80 max-w-[85vw] bg-white z-50 shadow-2xl flex flex-col p-6 transition-transform duration-300 ease-in-out md:hidden ${
+          isMobileMenuOpen ? "translate-x-0" : "translate-x-full"
+        }`}
+      >
+        {/* Drawer Header */}
+        <div className="flex items-center justify-between border-b border-[#eaddc7]/30 pb-4 mb-6">
+          <a href="#" className="flex items-center gap-3">
+            <div className="h-10 relative flex items-center justify-center">
+              {logoExists ? (
+                <img
+                  src={logoUrl}
+                  alt="Natraja"
+                  className="h-full w-auto object-contain"
+                  onError={() => setLogoExists(false)}
+                />
+              ) : (
+                <div className="h-full aspect-square bg-[#b8965a]/10 rounded-lg flex items-center justify-center font-black text-[#b8965a] text-lg">
+                  N
+                </div>
+              )}
+            </div>
+            <div className="flex flex-col justify-center">
+              <span className="font-black uppercase tracking-wide text-[#b8965a] text-xs leading-none">
+                Nagpal
+              </span>
+              <span className="font-black uppercase tracking-wide text-[#b8965a] text-xs leading-none mt-0.5">
+                Industries
+              </span>
+            </div>
+          </a>
+          <button
+            onClick={() => setIsMobileMenuOpen(false)}
+            className="p-1 rounded-lg text-stone-500 hover:text-black hover:bg-stone-100 transition-all cursor-pointer"
+            aria-label="Close Menu"
+          >
+            <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+
+        {/* Drawer Links */}
+        <nav className="flex flex-col gap-4 text-sm font-extrabold uppercase tracking-wider text-[#1c1917] overflow-y-auto flex-grow pr-1">
+          <a
+            href="/"
+            className={`py-2 px-3 rounded-xl transition-all ${
+              pathname === "/" ? "bg-[#b8965a]/15 text-[#b8965a]" : "hover:bg-[#faf8f5] hover:text-[#b8965a]"
+            }`}
+          >
+            Home
+          </a>
+          <a
+            href="/about"
+            className={`py-2 px-3 rounded-xl transition-all ${
+              pathname.startsWith("/about") ? "bg-[#b8965a]/15 text-[#b8965a]" : "hover:bg-[#faf8f5] hover:text-[#b8965a]"
+            }`}
+          >
+            About Us
+          </a>
+          <a
+            href="/products"
+            className={`py-2 px-3 rounded-xl transition-all ${
+              pathname.startsWith("/products") ? "bg-[#b8965a]/15 text-[#b8965a]" : "hover:bg-[#faf8f5] hover:text-[#b8965a]"
+            }`}
+          >
+            Products
+          </a>
+          
+          {/* Categories Sub-Menu in Mobile Menu */}
+          {categories.length > 0 && (
+            <div className="pl-4 border-l border-[#eaddc7]/50 flex flex-col gap-2.5 my-1">
+              {categories.map((cat) => (
+                <a
+                  key={cat.id}
+                  href={`/products?category=${cat.slug}`}
+                  className="text-xs font-bold text-stone-500 hover:text-[#b8965a] transition-all capitalize"
+                >
+                  {cat.name}
+                </a>
+              ))}
+            </div>
+          )}
+
+          <a
+            href="/blogs"
+            className={`py-2 px-3 rounded-xl transition-all ${
+              pathname.startsWith("/blogs") ? "bg-[#b8965a]/15 text-[#b8965a]" : "hover:bg-[#faf8f5] hover:text-[#b8965a]"
+            }`}
+          >
+            Blog
+          </a>
+          <a
+            href="/contact"
+            className={`py-2 px-3 rounded-xl transition-all ${
+              pathname === "/contact" ? "bg-[#b8965a]/15 text-[#b8965a]" : "hover:bg-[#faf8f5] hover:text-[#b8965a]"
+            }`}
+          >
+            Contact
+          </a>
+        </nav>
+
+        {/* Drawer Footer Buttons */}
+        <div className="pt-6 border-t border-[#eaddc7]/30 mt-auto flex flex-col gap-3">
+          <a
+            href="/contact"
+            className="w-full py-3.5 bg-[#b8965a] hover:bg-[#a08048] text-white rounded-xl text-center text-xs font-extrabold uppercase tracking-wider transition-colors shadow-md shadow-[#b8965a]/10"
           >
             Get a Quote
           </a>
