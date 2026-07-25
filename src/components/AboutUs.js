@@ -383,7 +383,7 @@ export default function AboutUs({ isDetailedPage = false, children }) {
         <div className="max-w-7xl mx-auto px-6">
             <div className="text-center max-w-2xl mx-auto mb-16 space-y-2">
               <span className="text-xs font-bold uppercase text-[#b8965a] tracking-wider">Portfolio</span>
-              <h3 className="text-3xl font-extrabold tracking-tight text-[#1c1917]">Our Product Lines</h3>
+              <h3 className="text-2xl font-extrabold tracking-tight text-[#1c1917]">Our Product Lines</h3>
               <p className="text-xs text-[#57534e] font-medium leading-relaxed">
                 Explore our diverse portfolio of corrugating plants, paper slitters, rotary slotters, and box assembly setups.
               </p>

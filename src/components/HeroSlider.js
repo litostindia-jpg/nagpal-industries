@@ -205,7 +205,7 @@ export default function HeroSlider({ sliderSettings, slides, activeSlideIndex, s
 
       <div className="max-w-7xl w-full mx-auto px-6 grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch h-full relative z-10">
         {/* 2. TEXT AREA LAYOUT (LEFT SIDE) */}
-        <div className="lg:col-span-6 flex flex-col justify-center py-16 pr-4 space-y-7 z-20">
+        <div className="lg:col-span-6 flex flex-col justify-center py-16 pr-4 space-y-4 z-20 relative lg:-top-12">
           {/* Small Premium Badge (static, doesn't change per slide) */}
           <div className="flex items-center gap-2 self-start">
             <span className="h-1.5 w-1.5 rounded-full bg-[#b8965a]" />
@@ -225,7 +225,7 @@ export default function HeroSlider({ sliderSettings, slides, activeSlideIndex, s
               initial="initial"
               animate="animate"
               exit="exit"
-              className="flex flex-col space-y-7"
+              className="flex flex-col space-y-4"
             >
               {/* Dynamic Large Heading with Staggered Typewriter Reveal */}
               <motion.h1
@@ -355,7 +355,7 @@ export default function HeroSlider({ sliderSettings, slides, activeSlideIndex, s
                       <img
                         src={currentProduct}
                         alt="Natraja Premium Machine"
-                        className="max-h-[50vh] lg:max-h-[60vh] max-w-full w-auto object-contain filter drop-shadow-[0_30px_60px_rgba(0,0,0,0.15)] relative z-10 mx-auto"
+                        className="max-h-[65vh] lg:max-h-[80vh] max-w-[120%] w-auto object-contain filter drop-shadow-[0_30px_60px_rgba(0,0,0,0.15)] relative z-10 mx-auto"
                       />
                     </div>
                   </motion.div>
@@ -380,7 +380,7 @@ export default function HeroSlider({ sliderSettings, slides, activeSlideIndex, s
                     <img
                       src={fallbackProductSrc}
                       alt="Corrugator Line Render"
-                      className="max-h-[460px] w-auto rounded-3xl object-cover filter drop-shadow-[0_20px_45px_rgba(184,150,90,0.1)] border border-[#eaddc7]"
+                      className="max-h-[560px] lg:max-h-[700px] w-auto rounded-3xl object-cover filter drop-shadow-[0_20px_45px_rgba(184,150,90,0.1)] border border-[#eaddc7]"
                     />
                   </motion.div>
                 )}
