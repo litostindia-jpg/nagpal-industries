@@ -254,16 +254,19 @@ export default function AboutUs({ isDetailedPage = false, children }) {
 
           {/* Right Column: Dynamic Overview & Stats (Moved from Left Side) */}
           <div className="space-y-7 flex flex-col justify-center">
-            <div className="flex items-center gap-2 self-start">
-              <span className="h-1.5 w-1.5 rounded-full bg-[#b8965a]" />
-              <span className="text-[10px] font-bold text-[#b8965a] uppercase tracking-widest bg-[#b8965a]/10 px-3.5 py-1 rounded-full border border-[#b8965a]/20 inline-block">
-                Legacy Since 1952
-              </span>
+            <div className="space-y-2">
+              <div className="flex items-center gap-3 self-start">
+                <span className="text-xs font-black uppercase text-[#b8965a] tracking-wider">About Us</span>
+                <span className="h-4 w-[2px] bg-[#b8965a]/30"></span>
+                <span className="text-[10px] font-bold text-[#b8965a] uppercase tracking-widest bg-[#b8965a]/10 px-3.5 py-1 rounded-full border border-[#b8965a]/20 inline-block">
+                  Legacy Since 1952
+                </span>
+              </div>
+              
+              <h3 className="text-3xl lg:text-4xl font-extrabold tracking-tight text-[#1c1917]">
+                {aboutData.about_title || "Why Choose NATRAJA Machines?"}
+              </h3>
             </div>
-            
-            <h3 className="text-3xl lg:text-4xl font-extrabold tracking-tight text-[#1c1917]">
-              {aboutData.about_title || "Why Choose NATRAJA Machines?"}
-            </h3>
 
             {/* CKEditor description */}
             <div

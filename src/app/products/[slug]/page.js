@@ -5,6 +5,7 @@ import { useParams } from "next/navigation";
 import Header from "../../../components/Header";
 import Footer from "../../../components/Footer";
 import Products from "../../../components/Products";
+import ContactUs from "../../../components/ContactUs";
 
 export default function ProductDetail() {
   const { slug } = useParams();
@@ -91,7 +92,7 @@ export default function ProductDetail() {
 
       <main className="flex-1 pt-32 pb-24">
         <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-12 gap-16 items-start">
-          
+
           {/* Images Slider and Details Column */}
           <div className="lg:col-span-7 space-y-8">
             {/* Main Image View */}
@@ -116,9 +117,8 @@ export default function ProductDetail() {
                   <button
                     key={idx}
                     onClick={() => setActiveImageIdx(idx)}
-                    className={`h-20 w-20 rounded-xl overflow-hidden border-2 shrink-0 transition-all ${
-                      activeImageIdx === idx ? "border-[#b8965a]" : "border-[#eaddc7]/40 hover:border-[#b8965a]/50"
-                    }`}
+                    className={`h-20 w-20 rounded-xl overflow-hidden border-2 shrink-0 transition-all ${activeImageIdx === idx ? "border-[#b8965a]" : "border-[#eaddc7]/40 hover:border-[#b8965a]/50"
+                      }`}
                   >
                     <img src={img} alt="Thumbnail" className="w-full h-full object-cover" />
                   </button>
@@ -134,7 +134,7 @@ export default function ProductDetail() {
               <h1 className="text-3xl md:text-4xl font-black text-[#1c1917] leading-tight">
                 {product.title}
               </h1>
-              
+
               {/* Specs points */}
               {product.details && product.details.length > 0 && (
                 <div className="pt-4 border-t border-[#eaddc7]/30 space-y-6">
@@ -177,7 +177,7 @@ export default function ProductDetail() {
               <h3 className="text-lg font-extrabold text-[#1c1917] uppercase tracking-wider pb-3 border-b border-[#eaddc7]/30">
                 Detailed Specifications
               </h3>
-              <div 
+              <div
                 className="text-sm text-[#292524] leading-relaxed break-words overflow-hidden w-full [&_p]:mb-4 [&_h1]:text-2xl [&_h1]:font-bold [&_h1]:mb-3 [&_h2]:text-xl [&_h2]:font-bold [&_h2]:mb-3 [&_h3]:text-lg [&_h3]:font-bold [&_h3]:mb-2 [&_ul]:list-disc [&_ul]:pl-5 [&_ul]:mb-4 [&_ol]:list-decimal [&_ol]:pl-5 [&_ol]:mb-4 [&_a]:text-[#b8965a] [&_a]:underline"
                 dangerouslySetInnerHTML={{ __html: product.description || "<p>No description provided.</p>" }}
               />
@@ -286,6 +286,9 @@ export default function ProductDetail() {
 
       <div className="border-t border-[#eaddc7]/30 bg-[#faf8f5]">
         <Products />
+      </div>
+      <div className="border-t border-[#eaddc7]/30 bg-[#faf8f5]">
+        <ContactUs />
       </div>
 
       <Footer />

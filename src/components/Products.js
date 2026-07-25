@@ -45,12 +45,10 @@ export default function Products() {
 
   const stripHtml = (html) => {
     if (!html) return "";
-    return html.replace(/<[^>]*>/g, "").substring(0, 100) + "...";
+    return html.replace(/<[^>]*>/g, "").replace(/&nbsp;/g, " ").replace(/&amp;/g, "&").substring(0, 100) + "...";
   };
 
-  const filteredProducts = selectedCategory === "all"
-    ? products
-    : products.filter(prod => prod.category?.slug === selectedCategory);
+  const displayProducts = products.slice(0, 6);
 
   const sectionStyle = {
     backgroundColor: '#faf8f5'
@@ -78,9 +76,9 @@ export default function Products() {
 
   return (
     <>
-      <section id="products" className="py-24 relative" style={sectionStyle}>
+      <section id="products" className="pt-24 pb-12 relative" style={sectionStyle}>
         <div className="max-w-7xl mx-auto px-6 relative z-10">
-          
+
           <div className="text-center mb-16 space-y-2">
             <span className="text-xs font-bold uppercase text-[#b8965a] tracking-wider">Catalog</span>
             <h3 className="text-3xl font-extrabold tracking-tight text-[#1c1917]">OUR PRODUCTS</h3>
@@ -91,37 +89,8 @@ export default function Products() {
             </p>
           </div>
 
-          {/* Category Tabs */}
-          {categories.length > 0 && (
-            <div className="flex flex-wrap items-center justify-center gap-3 mb-12">
-              <button
-                onClick={() => setSelectedCategory("all")}
-                className={`px-5 py-2.5 rounded-full text-xs font-bold transition-all ${
-                  selectedCategory === "all"
-                    ? "bg-[#b8965a] text-white shadow-lg"
-                    : "bg-white text-gray-700 hover:bg-gray-100"
-                }`}
-              >
-                All Products
-              </button>
-              {categories.map((cat) => (
-                <button
-                  key={cat.id}
-                  onClick={() => setSelectedCategory(cat.slug)}
-                  className={`px-5 py-2.5 rounded-full text-xs font-bold transition-all ${
-                    selectedCategory === cat.slug
-                      ? "bg-[#b8965a] text-white shadow-lg"
-                      : "bg-white text-gray-700 hover:bg-gray-100"
-                  }`}
-                >
-                  {cat.name}
-                </button>
-              ))}
-            </div>
-          )}
-
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {filteredProducts.map((prod) => (
+            {displayProducts.map((prod) => (
               <div
                 key={prod.id}
                 className="rounded-2xl border border-[#eaddc7]/40 bg-white overflow-hidden hover:shadow-lg hover:shadow-black/5 hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between"
@@ -167,6 +136,12 @@ export default function Products() {
               </div>
             ))}
           </div>
+
+          <div className="mt-14 text-center">
+            <a href="/products" className="inline-flex items-center justify-center px-10 py-4 bg-[#1c1917] hover:bg-[#b8965a] text-white text-xs font-bold uppercase tracking-wider rounded-xl transition-colors shadow-lg hover:-translate-y-1 duration-300">
+              View All Products
+            </a>
+          </div>
         </div>
       </section>
 
@@ -176,14 +151,14 @@ export default function Products() {
           <div className="bg-white rounded-3xl w-full max-w-md overflow-hidden shadow-2xl animate-in fade-in zoom-in duration-300">
             <div className="p-6 border-b border-gray-100 flex justify-between items-center bg-gray-50/50">
               <h3 className="text-lg font-bold text-gray-900">Product Enquiry</h3>
-              <button 
+              <button
                 onClick={() => setIsModalOpen(false)}
                 className="h-8 w-8 rounded-full bg-gray-200 hover:bg-gray-300 flex items-center justify-center text-gray-600 transition-colors"
               >
                 &times;
               </button>
             </div>
-            
+
             <div className="p-6">
               {submitSuccess ? (
                 <div className="text-center py-8">
@@ -197,20 +172,20 @@ export default function Products() {
                     <p className="text-xs text-gray-500 uppercase font-bold tracking-wider mb-1">Enquiring about</p>
                     <p className="text-sm font-semibold text-gray-900 line-clamp-1">{enquiryProduct?.title}</p>
                   </div>
-                  
+
                   <div>
-                    <input type="text" required placeholder="Your Name" className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:outline-none focus:border-black focus:ring-1 focus:ring-black transition-all" value={formData.name} onChange={e => setFormData({...formData, name: e.target.value})} />
+                    <input type="text" required placeholder="Your Name" className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:outline-none focus:border-black focus:ring-1 focus:ring-black transition-all" value={formData.name} onChange={e => setFormData({ ...formData, name: e.target.value })} />
                   </div>
                   <div>
-                    <input type="email" required placeholder="Email Address" className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:outline-none focus:border-black focus:ring-1 focus:ring-black transition-all" value={formData.email} onChange={e => setFormData({...formData, email: e.target.value})} />
+                    <input type="email" required placeholder="Email Address" className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:outline-none focus:border-black focus:ring-1 focus:ring-black transition-all" value={formData.email} onChange={e => setFormData({ ...formData, email: e.target.value })} />
                   </div>
                   <div>
-                    <input type="tel" required placeholder="Phone Number" className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:outline-none focus:border-black focus:ring-1 focus:ring-black transition-all" value={formData.phone} onChange={e => setFormData({...formData, phone: e.target.value})} />
+                    <input type="tel" required placeholder="Phone Number" className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:outline-none focus:border-black focus:ring-1 focus:ring-black transition-all" value={formData.phone} onChange={e => setFormData({ ...formData, phone: e.target.value })} />
                   </div>
                   <div>
-                    <textarea required placeholder="Message" rows="3" className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:outline-none focus:border-black focus:ring-1 focus:ring-black transition-all resize-none" value={formData.message} onChange={e => setFormData({...formData, message: e.target.value})}></textarea>
+                    <textarea required placeholder="Message" rows="3" className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:outline-none focus:border-black focus:ring-1 focus:ring-black transition-all resize-none" value={formData.message} onChange={e => setFormData({ ...formData, message: e.target.value })}></textarea>
                   </div>
-                  
+
                   <button type="submit" disabled={isSubmitting} className="w-full bg-[#b8965a] hover:bg-[#a08048] text-white font-bold py-3.5 rounded-xl transition-all disabled:opacity-70 mt-2">
                     {isSubmitting ? "Sending..." : "Submit Enquiry"}
                   </button>

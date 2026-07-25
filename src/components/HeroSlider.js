@@ -2,6 +2,12 @@
 
 import { useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { Playfair_Display } from "next/font/google";
+
+const playfair = Playfair_Display({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700", "800", "900"],
+});
 
 // Framer Motion variants -----------------------------------------------
 
@@ -134,7 +140,7 @@ export default function HeroSlider({ sliderSettings, slides, activeSlideIndex, s
   }, [activeSlides.length, setActiveSlideIndex]);
 
   return (
-    <section className="relative h-[98vh] min-h-[800px] w-full bg-[#faf8f5] overflow-hidden border-b border-[#eaddc7]/30 pt-24 flex items-center select-none">
+    <section className="relative h-[100vh] min-h-[500px] w-full bg-[#faf8f5] overflow-hidden border-b border-[#eaddc7]/30 pt-28 flex items-center select-none">
       {/* 1. CLEAN BACKGROUND LAYER */}
       <div className="absolute inset-0 pointer-events-none z-0">
         {sliderSettings.active_type === "image" ? (
@@ -192,7 +198,7 @@ export default function HeroSlider({ sliderSettings, slides, activeSlideIndex, s
               <source src={sliderSettings.video_path} type="video/mp4" />
             </video>
             {/* Premium gradient overlay to keep text readable on the left and video clear/sharp on the right */}
-            <div className="absolute inset-0 bg-gradient-to-r from-black/75 via-black/45 to-transparent backdrop-blur-[1.5px] pointer-events-none z-[1]" />
+            <div className="absolute inset-0 bg-gradient-to-r from-black/75 via-black/45 to-transparent backdrop-blur-[5px] pointer-events-none z-[1]" />
           </>
         )}
       </div>
@@ -208,13 +214,13 @@ export default function HeroSlider({ sliderSettings, slides, activeSlideIndex, s
                 ? "text-[#b8965a] bg-black/40 border-[#b8965a]/40" 
                 : "text-[#b8965a] bg-[#b8965a]/10 border-[#b8965a]/25"
             }`}>
-              NATRAJA MACHINERY SINCE 1952
+              {currentSlide.title || "NATRAJA MACHINERY SINCE 1952"}
             </span>
           </div>
 
           <AnimatePresence mode="wait">
             <motion.div
-              key={`text-${slideKey}-${sliderSettings.active_type}`}
+              key={`text-static-${sliderSettings.active_type}`}
               variants={textContainerVariants}
               initial="initial"
               animate="animate"
@@ -228,14 +234,11 @@ export default function HeroSlider({ sliderSettings, slides, activeSlideIndex, s
                   animate: { opacity: 1, transition: { staggerChildren: 0.03 } }, // Typewriter speed
                   exit: { opacity: 0, transition: { duration: 0.2 } }
                 }}
-                className={`text-[40px] md:text-6xl lg:text-[64px] font-black leading-[1.05] tracking-tight uppercase flex flex-wrap drop-shadow-sm ${
+                className={`text-[40px] md:text-6xl lg:text-[64px] font-black leading-[1.05] tracking-tight flex flex-wrap drop-shadow-sm ${playfair.className} ${
                   sliderSettings.active_type === "video" ? "text-white drop-shadow-[0_4px_12px_rgba(0,0,0,0.6)]" : "text-[#1c1917]"
                 }`}
               >
-                {(sliderSettings.active_type === "video"
-                  ? sliderSettings.video_title || "Precision Machinery Built For Industrial Excellence"
-                  : currentSlide.title || "Precision Machinery Built For Industrial Excellence"
-                ).split(" ").map((word, wIdx) => (
+                {(sliderSettings.video_title || "Redefining Corrugated Box Machinery").split(" ").map((word, wIdx) => (
                   <span key={wIdx} className="inline-block mr-[12px] md:mr-[16px]">
                     {word.split("").map((char, cIdx) => (
                       <motion.span
@@ -259,10 +262,7 @@ export default function HeroSlider({ sliderSettings, slides, activeSlideIndex, s
                   sliderSettings.active_type === "video" ? "text-white/95 font-semibold drop-shadow-[0_2px_6px_rgba(0,0,0,0.6)]" : "text-[#57534e] font-medium"
                 }`}
               >
-                {(sliderSettings.active_type === "video"
-                  ? sliderSettings.video_content || "High performance corrugation and packaging systems built to last."
-                  : currentSlide.content || "Nagpal Industries NATRAJA engineering lines represent the gold standard of packaging manufacturing."
-                ).split(" ").map((word, i) => (
+                {(sliderSettings.video_content || "High performance corrugation and packaging systems built to last.").split(" ").map((word, i) => (
                   <motion.span
                     key={`${word}-${i}`}
                     initial={{ opacity: 0 }}
@@ -281,16 +281,10 @@ export default function HeroSlider({ sliderSettings, slides, activeSlideIndex, s
                 className="pt-2 flex flex-col sm:flex-row items-stretch sm:items-center gap-4"
               >
                 <a
-                  href={
-                    sliderSettings.active_type === "video"
-                      ? sliderSettings.video_button_link || "#products"
-                      : currentSlide.button_link || "#products"
-                  }
+                  href={sliderSettings.video_button_link || "/products"}
                   className="group relative px-8 py-4 bg-gradient-to-r from-[#b8965a] to-[#a08048] hover:from-[#1c1917] hover:to-[#2e2a27] text-white font-bold text-xs uppercase tracking-wider rounded-xl shadow-lg active:scale-[0.98] transition-all duration-300 text-center flex items-center justify-center gap-2 overflow-hidden"
                 >
-                  {sliderSettings.active_type === "video"
-                    ? sliderSettings.video_button_text || "Explore Catalogue"
-                    : currentSlide.button_text || "Explore Machinery"}
+                  {sliderSettings.video_button_text || "Explore Machinery"}
                   <svg
                     className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1"
                     fill="none"
@@ -334,8 +328,8 @@ export default function HeroSlider({ sliderSettings, slides, activeSlideIndex, s
         </div>
 
         {/* 5. PRODUCTS STAGE (RIGHT SIDE) */}
-        <div className="lg:col-span-6 hidden lg:flex items-center justify-center relative min-h-[550px] z-20">
-          <div className="relative w-full h-[600px] flex items-center justify-center overflow-hidden perspective-[1200px]">
+        <div className="lg:col-span-6 hidden lg:flex items-center justify-center relative h-full z-20">
+          <div className="relative w-full h-full min-h-[400px] flex items-center justify-center overflow-hidden perspective-[1200px]">
             <div className="relative group flex items-center justify-center w-full h-full">
               <AnimatePresence mode="popLayout">
                 {currentProduct ? (
@@ -357,11 +351,11 @@ export default function HeroSlider({ sliderSettings, slides, activeSlideIndex, s
                         sliderSettings.active_type === "video" ? "bg-black/40" : "bg-black/10"
                       }`}
                     />
-                    <div className="relative overflow-hidden rounded-2xl flex items-center justify-center">
+                    <div className="relative overflow-hidden rounded-2xl flex items-center justify-center h-full w-full">
                       <img
                         src={currentProduct}
                         alt="Natraja Premium Machine"
-                        className="max-h-[580px] lg:max-h-[620px] w-auto object-contain filter drop-shadow-[0_30px_60px_rgba(0,0,0,0.15)] relative z-10"
+                        className="max-h-[50vh] lg:max-h-[60vh] max-w-full w-auto object-contain filter drop-shadow-[0_30px_60px_rgba(0,0,0,0.15)] relative z-10 mx-auto"
                       />
                     </div>
                   </motion.div>

@@ -1,5 +1,6 @@
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
+import ContactUs from "../../components/ContactUs";
 
 export const metadata = {
   title: "Blogs - Nagpal Natraj Industries",
@@ -71,6 +72,9 @@ export default async function BlogsPage() {
         </div>
       </div>
 
+      <div className="border-t border-[#eaddc7]/30 bg-[#faf8f5]">
+        <ContactUs />
+      </div>
       <Footer />
     </main>
   );

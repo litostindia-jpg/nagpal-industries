@@ -11,7 +11,7 @@ export default function Footer() {
     linkedin: "",
     youtube: "",
   });
-  const [products, setProducts] = useState([]);
+  const [categories, setCategories] = useState([]);
   const [catalogs, setCatalogs] = useState([]);
   const [companyAddress, setCompanyAddress] = useState("");
   const [companyPhone, setCompanyPhone] = useState("");
@@ -28,9 +28,9 @@ export default function Footer() {
   useEffect(() => {
     const fetchFooterData = async () => {
       try {
-        const [settingsRes, productsRes, catalogsRes] = await Promise.all([
+        const [settingsRes, categoriesRes, catalogsRes] = await Promise.all([
           fetch(`${apiBaseUrl}/site-settings`),
-          fetch(`${apiBaseUrl}/products`),
+          fetch(`${apiBaseUrl}/categories`),
           fetch(`${apiBaseUrl}/catalogs`)
         ]);
 
@@ -52,9 +52,9 @@ export default function Footer() {
           if (data.google_map_iframe) setGoogleMapIframe(data.google_map_iframe);
         }
 
-        if (productsRes.ok) {
-          const prods = await productsRes.json();
-          setProducts(prods.slice(0, 5)); // Take top 5 products for footer
+        if (categoriesRes.ok) {
+          const cats = await categoriesRes.json();
+          setCategories(cats.slice(0, 5)); // Take top 5 categories for footer
         }
 
         if (catalogsRes.ok) {
@@ -87,16 +87,16 @@ export default function Footer() {
   } : {};
 
   return (
-    <footer className="bg-[#faf8f5] pb-12 relative" style={footerStyle}>
+    <footer className="bg-[#faf8f5] relative" style={footerStyle}>
 
       {/* Curved Shape Divider */}
       <div className="absolute top-0 left-0 w-full overflow-hidden leading-[0]">
-        <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none" className="relative block w-full h-[50px] md:h-[80px]">
+        <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none" className="relative block w-full h-[30px] md:h-[40px]">
           <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" className="fill-[#0a0a0a]"></path>
         </svg>
       </div>
 
-      <div className="max-w-[1400px] mx-auto px-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12 lg:gap-8 text-sm relative z-10 pt-20 md:pt-28">
+      <div className="max-w-[1400px] mx-auto px-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12 lg:gap-8 text-sm relative z-10 pt-10 md:pt-14">
 
         {/* Col 1: Branding */}
         <div className="space-y-4">
@@ -164,14 +164,14 @@ export default function Footer() {
 
         {/* Col 4: Our Services / Machinery */}
         <div className="space-y-5">
-          <h4 className="font-extrabold text-[19px] text-[#1c1917] tracking-wide">Our Products</h4>
+          <h4 className="font-extrabold text-[19px] text-[#1c1917] tracking-wide">Our Categories</h4>
           <ul className="space-y-3.5 text-base font-medium text-[#1c1917]">
-            {products.length > 0 ? (
-              products.map((prod, idx) => (
-                <li key={idx}><a href={`/products/${prod.slug}`} className="hover:text-[#b8965a] transition-colors drop-shadow-sm">{prod.title}</a></li>
+            {categories.length > 0 ? (
+              categories.map((cat, idx) => (
+                <li key={idx}><a href={`/products?category=${cat.slug}`} className="hover:text-[#b8965a] transition-colors drop-shadow-sm">{cat.name}</a></li>
               ))
             ) : (
-              <li><a href="/products" className="hover:text-[#b8965a] transition-colors drop-shadow-sm">View All Machinery</a></li>
+              <li><a href="/products" className="hover:text-[#b8965a] transition-colors drop-shadow-sm">View All Categories</a></li>
             )}
           </ul>
         </div>
@@ -202,7 +202,7 @@ export default function Footer() {
         </div>
       </div>
 
-      <div className="max-w-[1400px] mx-auto px-6 border-t border-[#eaddc7]/60 mt-16 pt-6 pb-6 flex flex-col items-center justify-center text-sm font-bold text-[#1c1917] relative z-10 drop-shadow-sm">
+      <div className="max-w-[1400px] mx-auto px-6 border-t border-[#eaddc7]/60 mt-8 pt-4 pb-4 flex flex-col items-center justify-center text-sm font-bold text-[#1c1917] relative z-10 drop-shadow-sm">
         <p>&copy; {new Date().getFullYear()} Nagpal Industries. All Rights Reserved.</p>
       </div>
 

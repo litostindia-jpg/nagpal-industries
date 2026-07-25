@@ -10,6 +10,7 @@ export default function Header() {
   const [categories, setCategories] = useState([]);
   const [products, setProducts] = useState([]);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [activeHoverCategory, setActiveHoverCategory] = useState("all");
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const pathname = usePathname() || "";
 
@@ -74,7 +75,7 @@ export default function Header() {
     <header
       className={`fixed z-50 transition-all duration-500 ease-in-out ${isScrolled
         ? "top-4 left-1/2 -translate-x-1/2 w-[95%] max-w-7xl bg-white shadow-[0_12px_40px_rgba(0,0,0,0.08)] border border-gray-100 py-1 px-8 rounded-full"
-        : "top-0 left-0 right-0 w-full bg-transparent border-b border-[#eaddc7]/15 py-5 px-6"
+        : "top-0 left-0 right-0 w-full bg-transparent py-2 px-6"
         }`}
     >
       <div className="max-w-7xl mx-auto w-full flex items-center justify-between gap-8">
@@ -125,41 +126,56 @@ export default function Header() {
             </a>
 
             {/* Mega Menu Dropdown */}
-            <div className={`absolute top-full left-1/2 -translate-x-1/2 pt-6 transition-all duration-300 ${isDropdownOpen ? "opacity-100 visible translate-y-0" : "opacity-0 invisible translate-y-2"}`}>
-              <div className="bg-white border border-[#eaddc7]/30 shadow-[0_20px_40px_rgba(0,0,0,0.1)] rounded-2xl p-6 w-[800px] flex gap-8 overflow-hidden relative z-50">
-
+            <div className={`absolute top-full left-1/2 -translate-x-1/2 xl:left-1/2 xl:-translate-x-1/2 lg:left-auto lg:right-[-150px] lg:translate-x-0 md:left-auto md:right-[-250px] md:translate-x-0 pt-6 transition-all duration-300 ${isDropdownOpen ? "opacity-100 visible translate-y-0" : "opacity-0 invisible translate-y-2"}`}>
+              <div className="bg-white border border-[#eaddc7]/30 shadow-[0_30px_60px_rgba(0,0,0,0.12)] rounded-3xl p-0 w-[90vw] md:w-[700px] lg:w-[900px] flex overflow-hidden relative z-50">
+                
                 {/* Left Side: Categories List */}
-                <div className="w-1/3 border-r border-[#eaddc7]/30 pr-6 space-y-1">
-                  <a href="/products" className="block px-4 py-2.5 text-[#1c1917] hover:bg-[#faf8f5] hover:text-[#b8965a] transition-colors font-black rounded-lg">
+                <div className="w-[30%] bg-[#faf8f5] border-r border-[#eaddc7]/30 p-6 flex flex-col gap-1.5">
+                  <h4 className="text-[11px] font-bold uppercase text-zinc-400 tracking-wider mb-2 px-3">Browse Categories</h4>
+                  <a 
+                    href="/products" 
+                    onMouseEnter={() => setActiveHoverCategory("all")}
+                    className={`block px-4 py-2.5 text-[13px] rounded-lg transition-all flex items-center justify-between ${activeHoverCategory === "all" ? "bg-white text-[#b8965a] font-bold shadow-sm" : "text-zinc-600 font-medium hover:bg-white/50"}`}
+                  >
                     View All Products
+                    {activeHoverCategory === "all" && <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 5l7 7-7 7" /></svg>}
                   </a>
                   {categories.map(cat => (
-                    <a key={cat.id} href={`/products?category=${cat.slug}`} className="block px-4 py-2 text-[#57534e] hover:bg-[#faf8f5] hover:text-[#b8965a] transition-colors font-bold capitalize text-xs rounded-lg">
+                    <a 
+                      key={cat.id} 
+                      href={`/products?category=${cat.slug}`} 
+                      onMouseEnter={() => setActiveHoverCategory(cat.slug)}
+                      className={`block px-4 py-2.5 text-[13px] capitalize rounded-lg transition-all flex items-center justify-between ${activeHoverCategory === cat.slug ? "bg-white text-[#b8965a] font-bold shadow-sm" : "text-zinc-600 font-medium hover:bg-white/50"}`}
+                    >
                       {cat.name}
+                      {activeHoverCategory === cat.slug && <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 5l7 7-7 7" /></svg>}
                     </a>
                   ))}
                 </div>
 
-                {/* Right Side: Products Grid categorized */}
-                <div className="w-2/3 grid grid-cols-2 gap-x-8 gap-y-6">
-                  {categories.map(cat => {
-                    const catProducts = products.filter(p => p.category?.slug === cat.slug).slice(0, 4); // Show top 4 per category
-                    if (catProducts.length === 0) return null;
-                    return (
-                      <div key={cat.id} className="space-y-3">
-                        <h4 className="text-[10px] font-black uppercase text-[#b8965a] tracking-widest border-b border-[#eaddc7]/30 pb-1">{cat.name}</h4>
-                        <ul className="space-y-2">
-                          {catProducts.map(prod => (
-                            <li key={prod.id}>
-                              <a href={`/products/${prod.slug}`} className="text-xs font-semibold text-[#57534e] hover:text-[#b8965a] transition-colors line-clamp-1">
-                                {prod.title}
-                              </a>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    );
-                  })}
+                {/* Right Side: Products Display */}
+                <div className="w-[70%] p-8 bg-white flex flex-col">
+                  <div className="flex items-center justify-between mb-6 pb-4 border-b border-zinc-100">
+                    <h4 className="text-[14px] font-black uppercase text-zinc-800 tracking-wide flex items-center gap-2">
+                      <span className="w-2 h-2 rounded-full bg-[#b8965a]"></span>
+                      {activeHoverCategory === "all" ? "Featured Products" : categories.find(c => c.slug === activeHoverCategory)?.name}
+                    </h4>
+                    <a href={activeHoverCategory === "all" ? "/products" : `/products?category=${activeHoverCategory}`} className="text-[11px] font-bold text-[#b8965a] uppercase tracking-wider hover:underline flex items-center gap-1 bg-[#faf8f5] px-3 py-1.5 rounded-full">
+                      View All <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 5l7 7-7 7" /></svg>
+                    </a>
+                  </div>
+                  
+                  <div className="grid grid-cols-2 gap-x-8 gap-y-1 mt-2">
+                    {(activeHoverCategory === "all" ? products : products.filter(p => p.category?.slug === activeHoverCategory))
+                      .slice(0, 16)
+                      .map(prod => (
+                        <a key={prod.id} href={`/products/${prod.slug}`} className="group py-2 transition-colors">
+                          <span className="text-[13px] font-bold text-[#1c1917] group-hover:text-[#b8965a] transition-colors line-clamp-1">
+                            {prod.title}
+                          </span>
+                        </a>
+                      ))}
+                  </div>
                 </div>
 
               </div>

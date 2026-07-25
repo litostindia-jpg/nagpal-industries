@@ -5,6 +5,7 @@ import Header from "../components/Header";
 import HeroSlider from "../components/HeroSlider";
 import AboutUs from "../components/AboutUs";
 import WhyChooseUs from "../components/WhyChooseUs";
+import Categories from "../components/Categories";
 import Products from "../components/Products";
 import Testimonials from "../components/Testimonials";
 import ContactUs from "../components/ContactUs";
@@ -96,6 +97,7 @@ export default function Home() {
 
       <AboutUs />
       <WhyChooseUs className="border-b border-[#eaddc7]/30" />
+      <Categories />
       <Products />
       <Testimonials />
 

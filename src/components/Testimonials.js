@@ -59,7 +59,7 @@ export default function Testimonials() {
   } : {};
 
   return (
-    <section className="py-24 bg-zinc-50 relative" style={parallaxTestimonialsStyle}>
+    <section className="pt-12 pb-24 bg-zinc-50 relative" style={parallaxTestimonialsStyle}>
       {bgTestimonials && <div className="absolute inset-0 bg-zinc-50/80 z-0 pointer-events-none"></div>}
       <div className="max-w-7xl mx-auto px-6 relative z-10">
           <div className="text-center max-w-2xl mx-auto mb-12 space-y-2">
