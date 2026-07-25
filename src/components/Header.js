@@ -27,17 +27,17 @@ export default function Header() {
           const data = await resSettings.json();
           if (data.site_logo) setLogoUrl(data.site_logo);
         }
-        
+
         if (resCats && resCats.ok) {
           const cats = await resCats.json();
           setCategories(cats);
         }
-        
+
         if (resProds && resProds.ok) {
           const prods = await resProds.json();
           setProducts(prods);
         }
-      } catch (err) {}
+      } catch (err) { }
     };
     fetchSettingsAndCategories();
 
@@ -73,8 +73,8 @@ export default function Header() {
   return (
     <header
       className={`fixed z-50 transition-all duration-500 ease-in-out ${isScrolled
-          ? "top-4 left-1/2 -translate-x-1/2 w-[95%] max-w-7xl bg-white shadow-[0_12px_40px_rgba(0,0,0,0.08)] border border-gray-100 py-1 px-8 rounded-full"
-          : "top-0 left-0 right-0 w-full bg-transparent border-b border-[#eaddc7]/15 py-5 px-6"
+        ? "top-4 left-1/2 -translate-x-1/2 w-[95%] max-w-7xl bg-white shadow-[0_12px_40px_rgba(0,0,0,0.08)] border border-gray-100 py-1 px-8 rounded-full"
+        : "top-0 left-0 right-0 w-full bg-transparent border-b border-[#eaddc7]/15 py-5 px-6"
         }`}
     >
       <div className="max-w-7xl mx-auto w-full flex items-center justify-between gap-8">
@@ -111,8 +111,8 @@ export default function Header() {
         <nav className="hidden md:flex items-center gap-8 text-xs uppercase font-extrabold tracking-wider transition-colors duration-300 text-black">
           <a href="/" className={`hover:text-[#b8965a] transition-colors relative after:absolute after:bottom-[-4px] after:left-0 after:h-[2px] after:bg-[#b8965a] hover:after:w-full after:transition-all ${pathname === "/" ? "text-[#b8965a] after:w-full" : "after:w-0"}`}>Home</a>
           <a href="/about" className={`hover:text-[#b8965a] transition-colors relative after:absolute after:bottom-[-4px] after:left-0 after:h-[2px] after:bg-[#b8965a] hover:after:w-full after:transition-all ${pathname.startsWith("/about") ? "text-[#b8965a] after:w-full" : "after:w-0"}`}>About Us</a>
-          
-          <div 
+
+          <div
             className="relative group"
             onMouseEnter={() => setIsDropdownOpen(true)}
             onMouseLeave={() => setIsDropdownOpen(false)}
@@ -123,15 +123,15 @@ export default function Header() {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M19 9l-7 7-7-7" />
               </svg>
             </a>
-            
+
             {/* Mega Menu Dropdown */}
             <div className={`absolute top-full left-1/2 -translate-x-1/2 pt-6 transition-all duration-300 ${isDropdownOpen ? "opacity-100 visible translate-y-0" : "opacity-0 invisible translate-y-2"}`}>
               <div className="bg-white border border-[#eaddc7]/30 shadow-[0_20px_40px_rgba(0,0,0,0.1)] rounded-2xl p-6 w-[800px] flex gap-8 overflow-hidden relative z-50">
-                
+
                 {/* Left Side: Categories List */}
                 <div className="w-1/3 border-r border-[#eaddc7]/30 pr-6 space-y-1">
                   <a href="/products" className="block px-4 py-2.5 text-[#1c1917] hover:bg-[#faf8f5] hover:text-[#b8965a] transition-colors font-black rounded-lg">
-                    View All Products
+                    View All Product
                   </a>
                   {categories.map(cat => (
                     <a key={cat.id} href={`/products?category=${cat.slug}`} className="block px-4 py-2 text-[#57534e] hover:bg-[#faf8f5] hover:text-[#b8965a] transition-colors font-bold capitalize text-xs rounded-lg">
@@ -185,8 +185,8 @@ export default function Header() {
           <a
             href="/contact"
             className={`hidden sm:inline-flex px-5 py-2 rounded-full text-xs font-bold uppercase tracking-wider active:scale-[0.98] transition-all ${isScrolled
-                ? "bg-black text-white hover:bg-stone-900 shadow-md shadow-black/10"
-                : "bg-[#b8965a] hover:bg-[#a08048] text-white shadow-md shadow-[#b8965a]/20 hover:shadow-[#b8965a]/30"
+              ? "bg-black text-white hover:bg-stone-900 shadow-md shadow-black/10"
+              : "bg-[#b8965a] hover:bg-[#a08048] text-white shadow-md shadow-[#b8965a]/20 hover:shadow-[#b8965a]/30"
               }`}
           >
             Get a Quote
@@ -195,11 +195,10 @@ export default function Header() {
           {/* Mobile Menu Hamburger Button */}
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className={`md:hidden p-2 rounded-xl transition-all focus:outline-none cursor-pointer ${
-              isScrolled
-                ? "text-black hover:bg-stone-100"
-                : "text-stone-800 hover:bg-black/5"
-            }`}
+            className={`md:hidden p-2 rounded-xl transition-all focus:outline-none cursor-pointer ${isScrolled
+              ? "text-black hover:bg-stone-100"
+              : "text-stone-800 hover:bg-black/5"
+              }`}
             aria-label="Toggle Menu"
           >
             {isMobileMenuOpen ? (
@@ -217,17 +216,15 @@ export default function Header() {
 
       {/* Mobile Menu Drawer Overlay */}
       <div
-        className={`fixed inset-0 bg-black/60 backdrop-blur-sm z-40 transition-opacity duration-300 md:hidden ${
-          isMobileMenuOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
-        }`}
+        className={`fixed inset-0 bg-black/60 backdrop-blur-sm z-40 transition-opacity duration-300 md:hidden ${isMobileMenuOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
+          }`}
         onClick={() => setIsMobileMenuOpen(false)}
       />
 
       {/* Mobile Menu Drawer Content */}
       <div
-        className={`fixed top-0 right-0 bottom-0 w-80 max-w-[85vw] bg-white z-50 shadow-2xl flex flex-col p-6 transition-transform duration-300 ease-in-out md:hidden ${
-          isMobileMenuOpen ? "translate-x-0" : "translate-x-full"
-        }`}
+        className={`fixed top-0 right-0 bottom-0 w-80 max-w-[85vw] bg-white z-50 shadow-2xl flex flex-col p-6 transition-transform duration-300 ease-in-out md:hidden ${isMobileMenuOpen ? "translate-x-0" : "translate-x-full"
+          }`}
       >
         {/* Drawer Header */}
         <div className="flex items-center justify-between border-b border-[#eaddc7]/30 pb-4 mb-6">
@@ -270,29 +267,26 @@ export default function Header() {
         <nav className="flex flex-col gap-4 text-sm font-extrabold uppercase tracking-wider text-[#1c1917] overflow-y-auto flex-grow pr-1">
           <a
             href="/"
-            className={`py-2 px-3 rounded-xl transition-all ${
-              pathname === "/" ? "bg-[#b8965a]/15 text-[#b8965a]" : "hover:bg-[#faf8f5] hover:text-[#b8965a]"
-            }`}
+            className={`py-2 px-3 rounded-xl transition-all ${pathname === "/" ? "bg-[#b8965a]/15 text-[#b8965a]" : "hover:bg-[#faf8f5] hover:text-[#b8965a]"
+              }`}
           >
             Home
           </a>
           <a
             href="/about"
-            className={`py-2 px-3 rounded-xl transition-all ${
-              pathname.startsWith("/about") ? "bg-[#b8965a]/15 text-[#b8965a]" : "hover:bg-[#faf8f5] hover:text-[#b8965a]"
-            }`}
+            className={`py-2 px-3 rounded-xl transition-all ${pathname.startsWith("/about") ? "bg-[#b8965a]/15 text-[#b8965a]" : "hover:bg-[#faf8f5] hover:text-[#b8965a]"
+              }`}
           >
             About Us
           </a>
           <a
             href="/products"
-            className={`py-2 px-3 rounded-xl transition-all ${
-              pathname.startsWith("/products") ? "bg-[#b8965a]/15 text-[#b8965a]" : "hover:bg-[#faf8f5] hover:text-[#b8965a]"
-            }`}
+            className={`py-2 px-3 rounded-xl transition-all ${pathname.startsWith("/products") ? "bg-[#b8965a]/15 text-[#b8965a]" : "hover:bg-[#faf8f5] hover:text-[#b8965a]"
+              }`}
           >
             Products
           </a>
-          
+
           {/* Categories Sub-Menu in Mobile Menu */}
           {categories.length > 0 && (
             <div className="pl-4 border-l border-[#eaddc7]/50 flex flex-col gap-2.5 my-1">
@@ -310,17 +304,15 @@ export default function Header() {
 
           <a
             href="/blogs"
-            className={`py-2 px-3 rounded-xl transition-all ${
-              pathname.startsWith("/blogs") ? "bg-[#b8965a]/15 text-[#b8965a]" : "hover:bg-[#faf8f5] hover:text-[#b8965a]"
-            }`}
+            className={`py-2 px-3 rounded-xl transition-all ${pathname.startsWith("/blogs") ? "bg-[#b8965a]/15 text-[#b8965a]" : "hover:bg-[#faf8f5] hover:text-[#b8965a]"
+              }`}
           >
             Blog
           </a>
           <a
             href="/contact"
-            className={`py-2 px-3 rounded-xl transition-all ${
-              pathname === "/contact" ? "bg-[#b8965a]/15 text-[#b8965a]" : "hover:bg-[#faf8f5] hover:text-[#b8965a]"
-            }`}
+            className={`py-2 px-3 rounded-xl transition-all ${pathname === "/contact" ? "bg-[#b8965a]/15 text-[#b8965a]" : "hover:bg-[#faf8f5] hover:text-[#b8965a]"
+              }`}
           >
             Contact
           </a>
