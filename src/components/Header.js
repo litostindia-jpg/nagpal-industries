@@ -131,7 +131,7 @@ export default function Header() {
                 {/* Left Side: Categories List */}
                 <div className="w-1/3 border-r border-[#eaddc7]/30 pr-6 space-y-1">
                   <a href="/products" className="block px-4 py-2.5 text-[#1c1917] hover:bg-[#faf8f5] hover:text-[#b8965a] transition-colors font-black rounded-lg">
-                    View All Product
+                    View All Products
                   </a>
                   {categories.map(cat => (
                     <a key={cat.id} href={`/products?category=${cat.slug}`} className="block px-4 py-2 text-[#57534e] hover:bg-[#faf8f5] hover:text-[#b8965a] transition-colors font-bold capitalize text-xs rounded-lg">
