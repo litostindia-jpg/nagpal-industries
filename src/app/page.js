@@ -102,27 +102,28 @@ export default function Home() {
       <Testimonials />
 
       {/* Plant Banner Image */}
-      <div className="w-full relative z-10 pt-12">
+      <div className="w-full relative z-10 pt-16 pb-8 bg-white">
+        {(siteSettings.home_banner_heading || siteSettings.home_banner_description) && (
+          <div className="max-w-4xl mx-auto text-center px-4 mb-8">
+            {siteSettings.home_banner_heading && (
+              <h2 className="text-3xl md:text-4xl lg:text-5xl font-black text-[#1c1917] mb-4 tracking-tight uppercase">
+                {siteSettings.home_banner_heading}
+              </h2>
+            )}
+            {siteSettings.home_banner_description && (
+              <p className="text-sm md:text-base lg:text-lg text-[#57534e] max-w-3xl mx-auto">
+                {siteSettings.home_banner_description}
+              </p>
+            )}
+          </div>
+        )}
+
         <div className="w-full relative overflow-hidden shadow-xl border-y border-[#eaddc7]/40 group bg-white">
           <img 
             src={siteSettings.home_banner_image || "/plant-banner.jpg"} 
             alt={siteSettings.home_banner_heading || "Fully Automatic Corrugated Box Making Machine Plant"} 
             className="w-full h-[350px] md:h-[500px] object-contain block mx-auto" 
           />
-          {(siteSettings.home_banner_heading || siteSettings.home_banner_description) && (
-            <div className="absolute inset-0 bg-black/50 flex flex-col items-center justify-center p-6 text-center transition-all duration-500 hover:bg-black/40">
-              {siteSettings.home_banner_heading && (
-                <h2 className="text-3xl md:text-5xl font-black text-white mb-4 drop-shadow-xl tracking-tight">
-                  {siteSettings.home_banner_heading}
-                </h2>
-              )}
-              {siteSettings.home_banner_description && (
-                <p className="text-sm md:text-xl text-zinc-100 max-w-4xl drop-shadow-lg">
-                  {siteSettings.home_banner_description}
-                </p>
-              )}
-            </div>
-          )}
         </div>
       </div>
 
