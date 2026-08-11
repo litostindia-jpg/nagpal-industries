@@ -102,12 +102,12 @@ export default function Home() {
       <Testimonials />
 
       {/* Plant Banner Image */}
-      <div className="max-w-5xl mx-auto px-4 md:px-8 relative z-10 pt-12">
-        <div className="w-full relative overflow-hidden shadow-2xl rounded-3xl border border-[#eaddc7]/40 group">
+      <div className="w-full relative z-10 pt-12">
+        <div className="w-full relative overflow-hidden shadow-xl border-y border-[#eaddc7]/40 group bg-white">
           <img 
             src={siteSettings.home_banner_image || "/plant-banner.jpg"} 
             alt={siteSettings.home_banner_heading || "Fully Automatic Corrugated Box Making Machine Plant"} 
-            className="w-full h-auto object-contain block bg-white" 
+            className="w-full h-[350px] md:h-[500px] object-contain block mx-auto" 
           />
           {(siteSettings.home_banner_heading || siteSettings.home_banner_description) && (
             <div className="absolute inset-0 bg-black/50 flex flex-col items-center justify-center p-6 text-center transition-all duration-500 hover:bg-black/40">
