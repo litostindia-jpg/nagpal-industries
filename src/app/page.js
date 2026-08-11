@@ -107,7 +107,7 @@ export default function Home() {
           <img 
             src={siteSettings.home_banner_image || "/plant-banner.jpg"} 
             alt={siteSettings.home_banner_heading || "Fully Automatic Corrugated Box Making Machine Plant"} 
-            className="w-full h-full md:h-auto object-cover absolute md:relative inset-0" 
+            className="w-full h-[350px] md:h-[500px] object-cover absolute md:relative inset-0" 
           />
           {(siteSettings.home_banner_heading || siteSettings.home_banner_description) && (
             <div className="absolute inset-0 bg-black/50 flex flex-col items-center justify-center p-6 text-center transition-all duration-500 hover:bg-black/40">
