@@ -233,7 +233,7 @@ export default function AboutUs({ isDetailedPage = false, children }) {
           <div className="w-full relative rounded-3xl border border-[#eaddc7]/40 overflow-hidden shadow-lg bg-[#faf8f5] aspect-video lg:aspect-[4/3] flex items-center justify-center">
             
             {/* Watermark Logo Overlay */}
-            <div className="absolute top-4 left-4 md:top-6 md:left-6 z-20 pointer-events-none bg-white/70 p-2 md:p-3 rounded-xl backdrop-blur-sm border border-white/50 shadow-sm">
+            <div className="absolute top-4 left-4 md:top-6 md:left-6 z-20 pointer-events-none drop-shadow-md">
               <img 
                 src={aboutData.site_logo || "/logo.png"} 
                 alt="Nagpal Industries Logo" 
