@@ -140,6 +140,7 @@ export default function AboutUs({ isDetailedPage = false, children }) {
             about_image: settingsData.about_image || "",
             about_video: settingsData.about_video || "",
             bg_about_section: settingsData.bg_about_section || "",
+            site_logo: settingsData.site_logo || "/logo.png",
           });
         }
 
@@ -229,27 +230,34 @@ export default function AboutUs({ isDetailedPage = false, children }) {
         {/* SECTION 1: OVERVIEW */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           {/* Left Column: Autoplay Video Player or Fallback Image */}
-          <div className="relative rounded-3xl border border-[#eaddc7]/40 overflow-hidden shadow-lg bg-[#faf8f5] aspect-video lg:aspect-[4/3] flex items-center justify-center">
-            {aboutData.about_video ? (
-              <video
-                src={aboutData.about_video}
-                autoPlay
-                loop
-                muted
-                playsInline
-                className="w-full h-full object-cover absolute inset-0"
-              />
-            ) : aboutData.about_image ? (
-              <img
-                src={aboutData.about_image}
-                alt="Nagpal Natraj factory floor machinery"
-                className="w-full h-full object-cover absolute inset-0"
-              />
-            ) : (
-              <div className="p-8 text-center text-xs text-zinc-400">
-                No video or image asset uploaded. Configure it in Admin settings.
-              </div>
-            )}
+          <div className="flex flex-col items-center gap-6">
+            <img 
+              src={aboutData.site_logo || "/logo.png"} 
+              alt="Nagpal Industries Logo" 
+              className="h-14 w-auto object-contain" 
+            />
+            <div className="w-full relative rounded-3xl border border-[#eaddc7]/40 overflow-hidden shadow-lg bg-[#faf8f5] aspect-video lg:aspect-[4/3] flex items-center justify-center">
+              {aboutData.about_video ? (
+                <video
+                  src={aboutData.about_video}
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                  className="w-full h-full object-cover absolute inset-0"
+                />
+              ) : aboutData.about_image ? (
+                <img
+                  src={aboutData.about_image}
+                  alt="Nagpal Natraj factory floor machinery"
+                  className="w-full h-full object-cover absolute inset-0"
+                />
+              ) : (
+                <div className="p-8 text-center text-xs text-zinc-400">
+                  No video or image asset uploaded. Configure it in Admin settings.
+                </div>
+              )}
+            </div>
           </div>
 
           {/* Right Column: Dynamic Overview & Stats (Moved from Left Side) */}
