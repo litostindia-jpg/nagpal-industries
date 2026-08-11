@@ -100,7 +100,7 @@ export default function AdminSettings() {
   const [saving, setSaving] = useState(false);
   const [logoExists, setLogoExists] = useState(true);
   
-  // Tab control: 'about', 'social', 'seo'
+  // Tab control: 'about', 'social', 'seo', 'banner'
   const [activeTab, setActiveTab] = useState("about");
 
   // Form state
@@ -149,6 +149,11 @@ export default function AdminSettings() {
   const [currentSiteLogo, setCurrentSiteLogo] = useState("");
   const [siteFaviconFile, setSiteFaviconFile] = useState(null);
   const [currentSiteFavicon, setCurrentSiteFavicon] = useState("");
+
+  const [homeBannerHeading, setHomeBannerHeading] = useState("");
+  const [homeBannerDescription, setHomeBannerDescription] = useState("");
+  const [homeBannerImageFile, setHomeBannerImageFile] = useState(null);
+  const [currentHomeBannerImage, setCurrentHomeBannerImage] = useState("");
 
   const [errorMessage, setErrorMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
@@ -212,6 +217,9 @@ export default function AdminSettings() {
         setCurrentBgTestimonialsSection(data.bg_testimonials_section || "");
         setCurrentSiteLogo(data.site_logo || "");
         setCurrentSiteFavicon(data.site_favicon || "");
+        setHomeBannerHeading(data.home_banner_heading || "");
+        setHomeBannerDescription(data.home_banner_description || "");
+        setCurrentHomeBannerImage(data.home_banner_image || "");
 
         setLoading(false);
       } catch (err) {
@@ -276,6 +284,8 @@ export default function AdminSettings() {
       formData.append("seo_focus_keywords", seoFocusKeywords || "");
       formData.append("company_address", companyAddress || "");
       formData.append("google_map_iframe", googleMapIframe || "");
+      formData.append("home_banner_heading", homeBannerHeading || "");
+      formData.append("home_banner_description", homeBannerDescription || "");
       formData.append("contact_email", contactEmails.filter(Boolean).join(","));
       formData.append("contact_phone", contactPhones.filter(Boolean).join(","));
 
@@ -296,6 +306,7 @@ export default function AdminSettings() {
       if (bgTestimonialsSectionFile) formData.append("bg_testimonials_section", bgTestimonialsSectionFile);
       if (siteLogoFile) formData.append("site_logo", siteLogoFile);
       if (siteFaviconFile) formData.append("site_favicon", siteFaviconFile);
+      if (homeBannerImageFile) formData.append("home_banner_image", homeBannerImageFile);
 
       const res = await fetch(`${apiBaseUrl}/site-settings`, {
         method: "POST",
@@ -329,6 +340,7 @@ export default function AdminSettings() {
         if (result.settings.bg_testimonials_section) setCurrentBgTestimonialsSection(result.settings.bg_testimonials_section);
         if (result.settings.site_logo) setCurrentSiteLogo(result.settings.site_logo);
         if (result.settings.site_favicon) setCurrentSiteFavicon(result.settings.site_favicon);
+        if (result.settings.home_banner_image) setCurrentHomeBannerImage(result.settings.home_banner_image);
       }
       setAboutImageFile(null);
       setAboutVideoFile(null);
@@ -342,6 +354,7 @@ export default function AdminSettings() {
       setBgTestimonialsSectionFile(null);
       setSiteLogoFile(null);
       setSiteFaviconFile(null);
+      setHomeBannerImageFile(null);
     } catch (err) {
       setErrorMessage(err.message);
     } finally {
@@ -525,6 +538,16 @@ export default function AdminSettings() {
               }`}
             >
               Site Identity
+            </button>
+            <button
+              onClick={() => setActiveTab("banner")}
+              className={`pb-4 px-6 font-bold text-xs uppercase tracking-wider border-b-2 cursor-pointer transition-all ${
+                activeTab === "banner"
+                  ? "border-[#b8965a] text-[#b8965a]"
+                  : "border-transparent text-zinc-400 hover:text-zinc-600"
+              }`}
+            >
+              Promotional Banner
             </button>
             <button
               onClick={() => setActiveTab("social")}
@@ -781,6 +804,54 @@ export default function AdminSettings() {
                       <div className="mt-3 flex items-center gap-3">
                         <img src={currentSiteFavicon} alt="Favicon Preview" className="h-8 w-8 bg-gray-100 p-1 border rounded" />
                         <span className="text-[10px] text-zinc-400 truncate max-w-xs block">Active: {currentSiteFavicon.split('/').pop()}</span>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {activeTab === "banner" && (
+              /* PROMOTIONAL BANNER TAB */
+              <div className="rounded-3xl border border-[#eaddc7]/50 bg-white p-8 space-y-6 shadow-sm">
+                <div>
+                  <h3 className="text-base font-bold text-[#1c1917]">Promotional Home Banner</h3>
+                  <p className="text-xs text-[#57534e] mt-1">Manage the dynamic full-width banner on the home page.</p>
+                </div>
+                
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                  <div className="space-y-4">
+                    <div>
+                      <label className="block text-[10px] text-[#57534e] font-bold uppercase tracking-wide mb-2">Banner Heading</label>
+                      <input
+                        type="text"
+                        value={homeBannerHeading}
+                        onChange={(e) => setHomeBannerHeading(e.target.value)}
+                        placeholder="e.g. Special Offer..."
+                        className="w-full bg-white border border-[#eaddc7] rounded-xl px-4 py-2.5 text-[#1c1917] text-sm focus:outline-none focus:border-[#b8965a] transition-all"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-[10px] text-[#57534e] font-bold uppercase tracking-wide mb-2">Banner Description</label>
+                      <textarea
+                        value={homeBannerDescription}
+                        onChange={(e) => setHomeBannerDescription(e.target.value)}
+                        placeholder="Short description..."
+                        rows={4}
+                        className="w-full text-xs text-[#1c1917] bg-[#faf8f5] border border-[#eaddc7] rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#b8965a]/20 focus:border-[#b8965a] transition-all resize-none"
+                      />
+                    </div>
+                  </div>
+                  <div>
+                    <label className="block text-[10px] text-[#57534e] font-bold uppercase tracking-wide mb-2">Banner Image</label>
+                    <input
+                      type="file" accept="image/*" onChange={(e) => setHomeBannerImageFile(e.target.files[0])}
+                      className="w-full text-xs text-[#57534e] file:mr-3 file:py-1.5 file:px-3 file:rounded-lg file:border file:border-[#eaddc7] file:text-[10px] file:font-semibold file:bg-[#faf8f5] cursor-pointer"
+                    />
+                    {currentHomeBannerImage && (
+                      <div className="mt-3 flex items-center gap-3">
+                        <img src={currentHomeBannerImage} alt="Banner Preview" className="h-16 w-auto bg-gray-100 p-1 border rounded" />
+                        <span className="text-[10px] text-zinc-400 truncate max-w-xs block">Active: {currentHomeBannerImage.split('/').pop()}</span>
                       </div>
                     )}
                   </div>
