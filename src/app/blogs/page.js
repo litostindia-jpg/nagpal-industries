@@ -37,7 +37,7 @@ export default async function BlogsPage() {
                 <article key={blog.id} className="bg-white rounded-3xl overflow-hidden shadow-lg shadow-black/5 hover:shadow-xl hover:shadow-[#b8965a]/10 transition-all border border-[#eaddc7]/30 group">
                   <div className="aspect-video bg-zinc-100 overflow-hidden relative">
                     {blog.image ? (
-                      <img src={`http://localhost:8000${blog.image}`} alt={blog.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+                      <img src={`${apiBaseUrl.replace('/api', '')}${blog.image}`} alt={blog.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
                     ) : (
                       <div className="w-full h-full flex items-center justify-center text-zinc-300 font-bold">No Image</div>
                     )}

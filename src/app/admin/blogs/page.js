@@ -246,7 +246,7 @@ export default function BlogsAdmin() {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {blogs.map(blog => (
                 <div key={blog.id} className="bg-white border border-zinc-100 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all">
-                  {blog.image && <img src={`http://localhost:8000${blog.image}`} alt={blog.title} className="w-full h-48 object-cover" />}
+                  {blog.image && <img src={`${apiBaseUrl.replace('/api', '')}${blog.image}`} alt={blog.title} className="w-full h-48 object-cover" />}
                   <div className="p-5">
                     <div className="text-xs font-bold text-[#b8965a] uppercase mb-1">{blog.category?.name || "Uncategorized"}</div>
                     <h3 className="font-bold text-lg leading-tight mb-4">{blog.title}</h3>

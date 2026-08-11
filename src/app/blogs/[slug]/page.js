@@ -19,7 +19,11 @@ export default function BlogDetail() {
         const res = await fetch(`${apiBaseUrl}/blogs?slug=${slug}`);
         if (res.ok) {
           const data = await res.json();
-          setBlog(data);
+          if (Array.isArray(data)) {
+            setBlog(data.length > 0 ? data[0] : null);
+          } else {
+            setBlog(data);
+          }
         }
       } catch (err) {
         console.error("Failed to load blog details.", err);
@@ -80,7 +84,7 @@ export default function BlogDetail() {
 
           {blog.image && (
             <div className="rounded-3xl overflow-hidden shadow-lg border border-[#eaddc7]/30">
-              <img src={`http://localhost:8000${blog.image}`} alt={blog.title} className="w-full h-auto object-cover" />
+              <img src={`${apiBaseUrl.replace('/api', '')}${blog.image}`} alt={blog.title} className="w-full h-auto object-cover" />
             </div>
           )}
 
