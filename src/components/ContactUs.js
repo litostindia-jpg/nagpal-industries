@@ -16,6 +16,12 @@ export default function ContactUs() {
   const sectionRef = useRef(null);
   const [visible, setVisible] = useState(false);
 
+  // Fallback to ensure visibility even if observer fails
+  useEffect(() => {
+    const timer = setTimeout(() => setVisible(true), 1500);
+    return () => clearTimeout(timer);
+  }, []);
+
   useEffect(() => {
     const fetchSettings = async () => {
       try {

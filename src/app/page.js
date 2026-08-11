@@ -101,6 +101,13 @@ export default function Home() {
       <Products />
       <Testimonials />
 
+      {/* Plant Banner Image */}
+      <div className="max-w-[1400px] mx-auto px-6 pt-12 pb-4 relative z-10">
+        <div className="rounded-3xl overflow-hidden shadow-2xl border border-[#eaddc7]/30">
+          <img src="/plant-banner.jpg" alt="Fully Automatic Corrugated Box Making Machine Plant" className="w-full h-auto object-cover hover:scale-105 transition-transform duration-700" />
+        </div>
+      </div>
+
       <ContactUs />
 
       <Footer />

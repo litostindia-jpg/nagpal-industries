@@ -18,6 +18,7 @@ export default function BlogsAdmin() {
   const [formData, setFormData] = useState({
     id: "",
     title: "",
+    slug: "",
     blog_category_id: "",
     content: "",
     image: null,
@@ -75,6 +76,7 @@ export default function BlogsAdmin() {
 
     const data = new FormData();
     data.append("title", formData.title);
+    data.append("slug", formData.slug);
     if (formData.blog_category_id) data.append("blog_category_id", formData.blog_category_id);
     data.append("content", formData.content);
     if (formData.seo_title) data.append("seo_title", formData.seo_title);
@@ -108,6 +110,7 @@ export default function BlogsAdmin() {
     setFormData({
       id: blog.id,
       title: blog.title,
+      slug: blog.slug || "",
       blog_category_id: blog.blog_category_id || "",
       content: blog.content || "",
       image: null,
@@ -177,7 +180,7 @@ export default function BlogsAdmin() {
           <h1 className="text-sm font-bold text-[#1c1917] uppercase tracking-wider">Manage Blogs</h1>
           {!isEditing && (
             <button onClick={() => {
-              setFormData({ id: "", title: "", blog_category_id: "", content: "", image: null, seo_title: "", seo_description: "", seo_keywords: "" });
+              setFormData({ id: "", title: "", slug: "", blog_category_id: "", content: "", image: null, seo_title: "", seo_description: "", seo_keywords: "" });
               setIsEditing(true);
             }} className="bg-[#b8965a] text-white px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-wider">Add New Blog</button>
           )}
@@ -192,7 +195,16 @@ export default function BlogsAdmin() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                   <label className="block text-xs font-bold uppercase text-zinc-500 mb-1">Title</label>
-                  <input type="text" value={formData.title} onChange={(e) => setFormData({...formData, title: e.target.value})} required className="w-full border border-zinc-200 rounded-lg px-3 py-2" />
+                  <input type="text" value={formData.title} onChange={(e) => {
+                    const title = e.target.value;
+                    // Auto-fill slug if it's empty or matches previous title
+                    const slug = formData.slug === "" ? title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '') : formData.slug;
+                    setFormData({...formData, title, slug});
+                  }} required className="w-full border border-zinc-200 rounded-lg px-3 py-2" />
+                </div>
+                <div>
+                  <label className="block text-xs font-bold uppercase text-zinc-500 mb-1">Slug (URL path)</label>
+                  <input type="text" value={formData.slug} onChange={(e) => setFormData({...formData, slug: e.target.value.toLowerCase().replace(/\s+/g, '-')})} required className="w-full border border-zinc-200 rounded-lg px-3 py-2" placeholder="e.g. my-first-blog" />
                 </div>
                 <div>
                   <label className="block text-xs font-bold uppercase text-zinc-500 mb-1">Category</label>
