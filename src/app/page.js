@@ -122,7 +122,7 @@ export default function Home() {
           <img 
             src={siteSettings.home_banner_image || "/plant-banner.jpg"} 
             alt={siteSettings.home_banner_heading || "Fully Automatic Corrugated Box Making Machine Plant"} 
-            className="w-full h-[350px] md:h-[500px] object-cover block" 
+            className="w-full h-auto block" 
           />
         </div>
       </div>
