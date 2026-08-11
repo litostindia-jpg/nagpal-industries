@@ -101,13 +101,13 @@ export default function Home() {
       <Products />
       <Testimonials />
 
-      {/* Plant Banner Image - Full Width */}
-      <div className="w-full relative z-10 pt-12">
-        <div className="w-full relative overflow-hidden shadow-xl border-y border-[#eaddc7]/30 group">
+      {/* Plant Banner Image */}
+      <div className="max-w-5xl mx-auto px-4 md:px-8 relative z-10 pt-12">
+        <div className="w-full relative overflow-hidden shadow-2xl rounded-3xl border border-[#eaddc7]/40 group">
           <img 
             src={siteSettings.home_banner_image || "/plant-banner.jpg"} 
             alt={siteSettings.home_banner_heading || "Fully Automatic Corrugated Box Making Machine Plant"} 
-            className="w-full h-auto object-contain block" 
+            className="w-full h-auto object-contain block bg-white" 
           />
           {(siteSettings.home_banner_heading || siteSettings.home_banner_description) && (
             <div className="absolute inset-0 bg-black/50 flex flex-col items-center justify-center p-6 text-center transition-all duration-500 hover:bg-black/40">
